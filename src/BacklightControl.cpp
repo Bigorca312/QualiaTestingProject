@@ -15,13 +15,14 @@ void set_backlight_percent(uint8_t pct) {
   uint32_t maxDuty = (1u << BL_RES) - 1u;
   uint32_t duty = (uint32_t)lroundf(perceptual * maxDuty);
   if (BL_INVERT) duty = maxDuty - duty;
-  ledcWrite(BL_CH, duty);
+  ledcWrite(BL_PIN, duty);
 }
 
 // Initialize the backlight with a starting brightness percentage (default 20%)
 static inline void backlight_begin(uint8_t start_percent = MIN_BACKLIGHT_PERCENT) {
-  ledcSetup(BL_CH, BL_FREQ, BL_RES);
-  ledcAttachPin(BL_PIN, BL_CH);
+  // ledcSetup(BL_CH, BL_FREQ, BL_RES);
+  // ledcAttach(BL_PIN, BL_CH);
+  ledcAttach(BL_PIN, BL_FREQ, BL_RES);
   set_backlight_percent(start_percent);
 }
 

@@ -2,6 +2,9 @@
 #include "DisplayInitialization.h"
 #include "BacklightControl.h"
 
+#if ENABLE_PWM_BACKLIGHT
+#endif
+
 // for qualia expander
 Arduino_XCA9554SWSPI* expander =  new Arduino_XCA9554SWSPI(PCA_TFT_RESET, PCA_TFT_CS, PCA_TFT_SCK, PCA_TFT_MOSI, &Wire, 0x3F);
 
@@ -13,7 +16,6 @@ void setup() {
   #if ENABLE_PWM_BACKLIGHT
     // PWM backlight control only works if the jumper is soldered on the qualia board
     BacklightControl::initDynamicBacklightControl();
-    BacklightControl::set_backlight_percent(50);
   #else
     expander->pinMode(PCA_TFT_BACKLIGHT, OUTPUT);
     expander->digitalWrite(PCA_TFT_BACKLIGHT, HIGH);  // backlight on
